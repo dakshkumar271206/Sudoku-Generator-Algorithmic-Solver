@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+#sudoku-board {
+    display: grid;
+    grid-template-columns: repeat(9, 40px);
+    grid-template-rows: repeat(9, 40px);
+    gap: 0;
+    margin-bottom: 20px;
+    border: 2px solid #333;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid #ddd;
+    outline: none;
+    color: #2b78e4; /* User input is blue */
+    transition: background 0.2s;
+}
+
+.cell:focus {
+    background-color: #e8f0fe;
+}
+
+/* Thick borders for the 3x3 grids */
+.border-right { border-right: 2px solid #333; }
+.border-bottom { border-bottom: 2px solid #333; }
+.readonly { color: #333; background: #fafafa; } /* Gen'd numbers are black */
+
+/* Hide HTML number arrows (standard + vendor-prefixed) */
+input[type=number] {
+  appearance: textfield;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.controls button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#btn-generate { background-color: #e0e0e0; color: #333; }
+#btn-solve { background-color: #2b78e4; color: white; font-weight: bold; }
