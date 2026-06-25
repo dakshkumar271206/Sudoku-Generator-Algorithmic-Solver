@@ -15,61 +15,113 @@ body {
     text-align: center;
     background: white;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    /* UPGRADE: Softer, deeper shadow for a more premium card feel */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08); 
+}
+
+h1 {
+    color: #222;
+    margin-bottom: 24px;
 }
 
 #sudoku-board {
     display: grid;
-    grid-template-columns: repeat(9, 40px);
-    grid-template-rows: repeat(9, 40px);
+    /* UPGRADE: Increased cell size slightly for better readability */
+    grid-template-columns: repeat(9, 45px); 
+    grid-template-rows: repeat(9, 45px);
     gap: 0;
-    margin-bottom: 20px;
-    border: 2px solid #333;
+    margin-bottom: 25px;
+    /* UPGRADE: Thicker, darker outer border */
+    border: 3px solid #222; 
 }
 
 .cell {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
+    /* UPGRADE: Perfect centering and larger font */
     text-align: center;
-    font-size: 20px;
-    border: 1px solid #ddd;
+    font-size: 24px;
+    /* UPGRADE: Lighter inner borders for better contrast against the 3x3 grids */
+    border: 1px solid #d3d3d3; 
     outline: none;
-    color: #2b78e4; /* User input is blue */
-    transition: background 0.2s;
+    /* UPGRADE: Distinct color for user input */
+    color: #0056b3; 
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background-color: #ffffff;
 }
 
+/* UPGRADE: UX active cell highlighting */
 .cell:focus {
-    background-color: #e8f0fe;
+    background-color: #e6f2ff;
+    /* Keep the outline inside the cell to avoid breaking the grid visual */
+    box-shadow: inset 0 0 0 2px #0056b3; 
 }
 
-/* Thick borders for the 3x3 grids */
-.border-right { border-right: 2px solid #333; }
-.border-bottom { border-bottom: 2px solid #333; }
-.readonly { color: #333; background: #fafafa; } /* Gen'd numbers are black */
+/* UPGRADE: Thicker borders for the 3x3 grids */
+.border-right { border-right: 3px solid #222; }
+.border-bottom { border-bottom: 3px solid #222; }
 
-/* Hide HTML number arrows (standard + vendor-prefixed) */
-input[type=number] {
-  appearance: textfield;
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
+/* UPGRADE: Generated numbers are visually distinct (Bold & Dark) */
+.readonly { 
+    color: #222; 
+    font-weight: bold; 
+    background-color: #f8f9fa; 
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+/* Hide HTML number arrows - Modern & Legacy Support */
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
+/* UPGRADE: Button layout */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
 .controls button {
-    padding: 10px 15px;
-    margin: 0 5px;
-    border: none;
-    border-radius: 5px;
+    padding: 12px 20px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
+    transition: all 0.2s ease;
 }
 
-#btn-generate { background-color: #e0e0e0; color: #333; }
-#btn-solve { background-color: #2b78e4; color: white; font-weight: bold; }
+/* UPGRADE: Secondary Button Styling (Generate) */
+#btn-generate { 
+    background-color: transparent; 
+    color: #2b78e4; 
+    border: 2px solid #2b78e4;
+    font-weight: 600;
+}
+
+#btn-generate:hover {
+    background-color: #f0f7ff;
+    transform: translateY(-2px);
+}
+
+/* UPGRADE: Primary Button Styling (Solve) */
+#btn-solve { 
+    background-color: #2b78e4; 
+    color: white; 
+    font-weight: bold; 
+    border: 2px solid #2b78e4;
+    box-shadow: 0 4px 6px rgba(43, 120, 228, 0.2);
+}
+
+#btn-solve:hover {
+    background-color: #1a5cbf;
+    border-color: #1a5cbf;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(43, 120, 228, 0.3);
+}
