@@ -16,112 +16,113 @@ body {
     background: white;
     padding: 30px;
     border-radius: 12px;
-    /* UPGRADE: Softer, deeper shadow for a more premium card feel */
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08); 
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    width: 450px; /* Fixed width to keep layout stable */
 }
 
-h1 {
+h1 { color: #222; margin-bottom: 10px; }
+h2 { color: #444; font-size: 20px; margin-bottom: 5px; }
+p { color: #666; font-size: 14px; margin-bottom: 15px; }
+
+/* Menu Styles */
+.menu-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+/* HUD Styles */
+.hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.stats {
+    font-weight: bold;
+    font-size: 18px;
     color: #222;
-    margin-bottom: 24px;
+    display: flex;
+    gap: 15px;
 }
 
+#display-timer { color: #2b78e4; font-family: monospace; font-size: 20px;}
+
+/* Board Styles */
 #sudoku-board {
     display: grid;
-    /* UPGRADE: Increased cell size slightly for better readability */
-    grid-template-columns: repeat(9, 45px); 
-    grid-template-rows: repeat(9, 45px);
+    grid-template-columns: repeat(9, 42px);
+    grid-template-rows: repeat(9, 42px);
     gap: 0;
     margin-bottom: 25px;
-    /* UPGRADE: Thicker, darker outer border */
-    border: 3px solid #222; 
+    border: 3px solid #222;
+    justify-content: center;
 }
 
 .cell {
-    width: 45px;
-    height: 45px;
-    /* UPGRADE: Perfect centering and larger font */
+    width: 42px;
+    height: 42px;
     text-align: center;
-    font-size: 24px;
-    /* UPGRADE: Lighter inner borders for better contrast against the 3x3 grids */
-    border: 1px solid #d3d3d3; 
+    font-size: 22px;
+    border: 1px solid #d3d3d3;
     outline: none;
-    /* UPGRADE: Distinct color for user input */
-    color: #0056b3; 
+    color: #0056b3;
     font-weight: 500;
     transition: all 0.2s ease;
     background-color: #ffffff;
 }
 
-/* UPGRADE: UX active cell highlighting */
 .cell:focus {
     background-color: #e6f2ff;
-    /* Keep the outline inside the cell to avoid breaking the grid visual */
-    box-shadow: inset 0 0 0 2px #0056b3; 
+    box-shadow: inset 0 0 0 2px #0056b3;
 }
 
-/* UPGRADE: Thicker borders for the 3x3 grids */
 .border-right { border-right: 3px solid #222; }
 .border-bottom { border-bottom: 3px solid #222; }
+.readonly { color: #222; font-weight: bold; background-color: #f8f9fa; }
 
-/* UPGRADE: Generated numbers are visually distinct (Bold & Dark) */
-.readonly { 
-    color: #222; 
-    font-weight: bold; 
-    background-color: #f8f9fa; 
-}
-
-/* Hide HTML number arrows - Modern & Legacy Support */
-input[type="number"] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-}
+input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
 input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    appearance: none;
-    -webkit-appearance: none;
-    margin: 0;
-}
+input[type="number"]::-webkit-inner-spin-button { appearance: none; -webkit-appearance: none; margin: 0; }
 
-/* UPGRADE: Button layout */
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.controls button {
+/* Buttons */
+button {
     padding: 12px 20px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
+    border: none;
     transition: all 0.2s ease;
 }
 
-/* UPGRADE: Secondary Button Styling (Generate) */
-#btn-generate { 
-    background-color: transparent; 
-    color: #2b78e4; 
-    border: 2px solid #2b78e4;
-    font-weight: 600;
-}
+button:hover { transform: translateY(-2px); }
 
-#btn-generate:hover {
-    background-color: #f0f7ff;
-    transform: translateY(-2px);
-}
+.primary-btn-large { background-color: #2b78e4; color: white; width: 100%; font-size: 18px; padding: 15px; }
+.primary-btn-large:hover { background-color: #1a5cbf; }
 
-/* UPGRADE: Primary Button Styling (Solve) */
-#btn-solve { 
-    background-color: #2b78e4; 
-    color: white; 
-    font-weight: bold; 
-    border: 2px solid #2b78e4;
-    box-shadow: 0 4px 6px rgba(43, 120, 228, 0.2);
-}
+.secondary-btn { background-color: white; color: #2b78e4; border: 2px solid #2b78e4; }
+.secondary-btn:hover { background-color: #f0f7ff; }
 
-#btn-solve:hover {
-    background-color: #1a5cbf;
-    border-color: #1a5cbf;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(43, 120, 228, 0.3);
-}
+.success-btn { background-color: #28a745; color: white; }
+.success-btn:hover { background-color: #218838; }
+
+.danger-btn { background-color: #dc3545; color: white; }
+.danger-btn:hover { background-color: #c82333; }
+
+.text-btn { background: none; color: #666; padding: 0; font-weight: normal; }
+.text-btn:hover { color: #222; transform: none; text-decoration: underline; }
+
+/* Utilities */
+.hidden { display: none !important; }
