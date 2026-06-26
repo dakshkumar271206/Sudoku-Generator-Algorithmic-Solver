@@ -3,20 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Sudoku Solver</title>
+    <title>Python Sudoku Master</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Sudoku</h1>
         
-        <div id="sudoku-board">
+        <div id="main-menu">
+            <h1>Sudoku Master</h1>
+            
+            <div class="menu-section">
+                <h2>Campaign</h2>
+                <p>Progress through increasingly difficult puzzles.</p>
+                <button id="btn-start-level" class="primary-btn-large">Play Level Mode</button>
             </div>
 
-        <div class="controls">
-            <button id="btn-generate">Generate New Puzzle</button>
-            <button id="btn-solve" class="primary">Solve For Me</button>
+            <div class="menu-section">
+                <h2>Free Play</h2>
+                <p>Practice specific difficulties.</p>
+                <select id="difficulty-select">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                    <option value="expert">Expert</option>
+                </select>
+                <button id="btn-start-free" class="secondary-btn">Start Practice</button>
+            </div>
         </div>
+
+        <div id="game-screen" class="hidden">
+            <div class="hud">
+                <button id="btn-back" class="text-btn">← Main Menu</button>
+                <div class="stats">
+                    <span id="display-mode">Level 1</span>
+                    <span id="display-timer">00:00</span>
+                </div>
+            </div>
+            
+            <div id="sudoku-board"></div>
+
+            <div class="controls">
+                <button id="btn-check" class="success-btn">Check My Solution</button>
+                <button id="btn-solve" class="danger-btn">Cheat (Solve For Me)</button>
+            </div>
+            
+            <button id="btn-next-level" class="primary-btn-large hidden" style="margin-top:15px;">Next Level →</button>
+        </div>
+
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
