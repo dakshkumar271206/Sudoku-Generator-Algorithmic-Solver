@@ -1,20 +1,43 @@
-🧩 Sudoku Generator & Algorithmic Solver
+Python Sudoku Master 🧩
+Sudoku Master is a full-stack, web-based Sudoku game powered by a robust Python backtracking algorithm. It features a clean, responsive UI and offers both a progressive campaign mode and a customizable free-play sandbox.
 
-Description:
-A web-based application that generates playable Sudoku puzzles and visualizes algorithmic problem-solving. At its core, the application leverages a Python-based backtracking algorithm to instantly compute the solution to any valid Sudoku grid.
+The project strictly separates concerns, using a lightweight Flask API for the heavy computational logic (puzzle generation and solving) and Vanilla JavaScript with CSS Grid for a snappy, interactive frontend.
 
-🚀 Key Features
+✨ Key Features
+Campaign (Level) Mode: Progress through an endless series of puzzles that automatically increase in difficulty as you advance through the levels.
 
-Algorithmic Solver: Implements an efficient recursive backtracking algorithm (utilizing modular find_empty and is_valid functions) to solve complex puzzles in real-time.
+Free Play Mode: Practice your skills by selecting a specific difficulty tier: Easy, Medium, Hard, or Expert.
 
-Dynamic Generation: Features a "Generate New Puzzle" engine that instantly populates the grid with fresh, randomized Sudoku challenges.
+Live Timer & HUD: Track your solving speed in real-time with a built-in Heads Up Display to measure your improvement.
 
-Seamless Web Interface: A minimalist, user-friendly frontend that smoothly communicates with the Python backend to deliver instant results.
+Smart Validation: The game doesn't just check if the board is full; it mathematically verifies your inputs against Sudoku rules to ensure a genuine win.
+
+Algorithmic Auto-Solver: Stuck on a puzzle? The built-in "Solve For Me" cheat utilizes a highly optimized Python depth-first search (Backtracking) algorithm to solve any valid board in milliseconds.
+
+Infinite Unique Puzzles: Instead of using a static database of pre-made games, the Python backend dynamically generates a brand-new, mathematically unique puzzle every single time you play.
 
 🛠️ Tech Stack
+Backend: Python 3, Flask (API routing)
 
-Backend Core: Python
+Game Engine: Custom Python modules (solver.py, generator.py)
 
-Algorithm Architecture: Recursive Backtracking
+Frontend: HTML5, CSS3 (CSS Grid architecture), Vanilla JavaScript (DOM manipulation & Fetch API)
 
-Frontend: HTML, CSS (served via local web server)
+Architecture: RESTful API design exchanging JSON payloads.
+
+🚀 How to Run Locally
+Ensure you have Python 3 installed.
+
+Clone this repository and navigate to the project folder:
+
+Bash
+cd sudoku_project
+Install the required dependencies:
+
+Bash
+pip install flask
+Start the local server:
+
+Bash
+python app.py
+Open your web browser and go to http://127.0.0.1:5000 to play!
