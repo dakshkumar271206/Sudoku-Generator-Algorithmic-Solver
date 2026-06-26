@@ -1,100 +1,47 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const boardElement = document.getElementById("sudoku-board");
-    const btnGenerate = document.getElementById("btn-generate");
-    const btnSolve = document.getElementById("btn-solve");
+from flask import Flask, render_template, request, jsonify
+from backend.solver import solve, is_valid_completed_board
+from backend.generator import generate_puzzle
 
-    // 1. Build the 9x9 grid in the DOM
-    function initializeBoard() {
-        for (let row = 0; row < 9; row++) {
-            for (let col = 0; col < 9; col++) {
-                const input = document.createElement("input");
-                input.type = "number";
-                input.min = 1;
-                input.max = 9;
-                input.className = "cell";
-                input.id = `cell-${row}-${col}`;
+app = Flask(__name__)
 
-                // Add thick borders for 3x3 visual blocks
-                if ((col + 1) % 3 === 0 && col !== 8) input.classList.add("border-right");
-                if ((row + 1) % 3 === 0 && row !== 8) input.classList.add("border-bottom");
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-                boardElement.appendChild(input);
-            }
-        }
-    }
+@app.route('/generate', methods=['GET'])
+def generate():
+    mode = request.args.get('mode', 'free')
+    
+    if mode == 'level':
+        level = int(request.args.get('level', 1))
+        # Base of 30 empty cells, add 2 for each level
+        empty_cells = 30 + (level * 2) 
+    else:
+        # Free mode handling
+        diff = request.args.get('difficulty', 'medium')
+        if diff == 'easy': empty_cells = 35
+        elif diff == 'medium': empty_cells = 45
+        elif diff == 'hard': empty_cells = 55
+        elif diff == 'expert': empty_cells = 62
+        else: empty_cells = 45
 
-    // 2. Read the inputs and create a 2D Array
-    function getBoardState() {
-        const board = [];
-        for (let row = 0; row < 9; row++) {
-            const currentRow = [];
-            for (let col = 0; col < 9; col++) {
-                const val = document.getElementById(`cell-${row}-${col}`).value;
-                currentRow.push(val === "" ? 0 : parseInt(val));
-            }
-            board.push(currentRow);
-        }
-        return board;
-    }
+    board = generate_puzzle(empty_cells=empty_cells)
+    return jsonify({'board': board})
 
-    // 3. Update the inputs from a 2D Array
-    function setBoardState(board, isGenerated = false) {
-        for (let row = 0; row < 9; row++) {
-            for (let col = 0; col < 9; col++) {
-                const cell = document.getElementById(`cell-${row}-${col}`);
-                const val = board[row][col];
-                
-                if (val !== 0) {
-                    cell.value = val;
-                    if (isGenerated) {
-                        cell.readOnly = true;
-                        cell.classList.add("readonly");
-                    }
-                } else {
-                    cell.value = "";
-                    cell.readOnly = false;
-                    cell.classList.remove("readonly");
-                }
-            }
-        }
-    }
+@app.route('/solve', methods=['POST'])
+def solve_board():
+    data = request.get_json()
+    board = data.get('board')
+    if solve(board):
+        return jsonify({'board': board, 'status': 'success'})
+    return jsonify({'error': 'Unsolvable board configuration'}), 400
 
-    // 4. API Calls
-    async function generatePuzzle() {
-        const res = await fetch("/generate");
-        const data = await res.json();
-        
-        // Reset DOM classes first
-        document.querySelectorAll('.cell').forEach(c => {
-            c.readOnly = false;
-            c.classList.remove("readonly");
-            c.value = "";
-        });
+@app.route('/validate', methods=['POST'])
+def validate():
+    data = request.get_json()
+    board = data.get('board')
+    is_correct = is_valid_completed_board(board)
+    return jsonify({'correct': is_correct})
 
-        setBoardState(data.board, true);
-    }
-
-    async function solvePuzzle() {
-        const currentBoard = getBoardState();
-        const res = await fetch("/solve", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ board: currentBoard })
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-            setBoardState(data.board);
-        } else {
-            alert(data.error || "Could not solve this board. Ensure your inputs are valid.");
-        }
-    }
-
-    // Event Listeners
-    btnGenerate.addEventListener("click", generatePuzzle);
-    btnSolve.addEventListener("click", solvePuzzle);
-
-    // Initialize UI and fetch the first puzzle
-    initializeBoard();
-    generatePuzzle();
-});
+if __name__ == '__main__':
+    app.run(debug=True)
