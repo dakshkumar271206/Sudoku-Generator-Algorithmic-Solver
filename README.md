@@ -1,4 +1,4 @@
-Python Sudoku Master 🧩
+# Python Sudoku Master 🧩
 Sudoku Master is a full-stack, web-based Sudoku game powered by a robust Python backtracking algorithm. It features a clean, responsive UI and offers both a progressive campaign mode and a customizable free-play sandbox.
 
 The project strictly separates concerns, using a lightweight Flask API for the heavy computational logic (puzzle generation and solving) and Vanilla JavaScript with CSS Grid for a snappy, interactive frontend.
